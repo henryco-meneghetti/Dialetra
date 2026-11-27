@@ -37,8 +37,11 @@ A palavra pode ter letras repetidas, como em *amada*.
 
 - Três níveis: fácil (6 tentativas), médio (5) e difícil (4)
 - Mais de 1.100 palavras em português
-- Teclado na tela que mostra as letras já usadas
-- Estatísticas salvas no navegador: partidas, vitórias, sequência atual e melhor sequência
+- Teclado na tela que mostra as letras já usadas, e o teclado do computador aceita letras com acento
+- Letras que viram uma por uma ao revelar o palpite
+- Estatísticas salvas no navegador: partidas, vitórias, sequências e acertos por tentativa
+- Botão para compartilhar o resultado em quadradinhos coloridos, sem entregar a palavra
+- Sons gerados pelo próprio navegador, com botão para desligar
 - Funciona no celular e no computador
 - Fundo animado de estrelas, desenhado com Canvas
 
