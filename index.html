@@ -3,12 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Dialetra: jogo de palavras em português. Descubra a palavra secreta de 5 letras.">
+    <meta name="theme-color" content="#000000">
+    <meta property="og:title" content="Dialetra">
+    <meta property="og:description" content="Jogo de palavras em português. Descubra a palavra secreta de 5 letras.">
+    <meta property="og:image" content="https://dialetra.netlify.app/docs/banner.png">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316a34a'/%3E%3Ctext x='32' y='45' font-family='Arial' font-weight='700' font-size='38' text-anchor='middle' fill='white'%3ED%3C/text%3E%3C/svg%3E">
 
     <title>Dialetra</title>
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2580683477309905"
      crossorigin="anonymous"></script>
 </head>
@@ -16,140 +23,128 @@
 <body>
     <canvas id="spaceCanvas"></canvas>
 
-        <p id="titulo">DIALETRA</p><p id="titulo">DIALETRA</p>
-        <div class="containerbotoes">
-            <button class="botoes" id="comojogar">?</button>
-            <button class="botoes" id="sobre">ⓘ</button>
-            <button class="botoes" id="estatisticas">📊</button>
-        </div>
+    <div class="app">
+        <header class="topo">
+            <h1 id="titulo">DIALETRA</h1>
+            <div class="containerbotoes">
+                <button class="botoes" id="comojogar" aria-label="Como jogar" title="Como jogar">?</button>
+                <button class="botoes" id="estatisticas" aria-label="Estatísticas" title="Estatísticas">📊</button>
+                <button class="botoes" id="som" aria-label="Desligar som" title="Desligar som">🔊</button>
+                <button class="botoes" id="sobre" aria-label="Sobre o jogo" title="Sobre o jogo">ⓘ</button>
+            </div>
+            <div class="linha-modo">
+                <select id="modoJogo" aria-label="Dificuldade">
+                    <option value="facil">Fácil (6 tentativas)</option>
+                    <option value="medio">Médio (5 tentativas)</option>
+                    <option value="dificil">Difícil (4 tentativas)</option>
+                </select>
+                <button id="novaPartida" class="botao-principal pequeno" hidden>Jogar de novo</button>
+            </div>
+        </header>
 
-        <div class="containermodo">
-            <select id="modoJogo">
-                <option value="facil">Fácil (6 tentativas)</option>
-                <option value="medio">Médio (5 tentativas)</option>
-                <option value="dificil">Difícil (4 tentativas)</option>
-            </select>
-        </div>
-    
+        <main class="containerpalavras" id="tabuleiro" aria-label="Tabuleiro"></main>
 
-    <div class="containerpalavras">
-        <div class="linha">
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-        </div>
-        <div class="linha">
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-        </div>
-        <div class="linha">
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-        </div>
-        <div class="linha">
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-        </div>
-        <div class="linha">
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-        </div>
-        <div class="linha">
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-            <div class="celula"></div>
-        </div>
-    </div>
+        <div class="rodape">
+            <div id="aviso" role="status" aria-live="polite"></div>
 
-    <!-- Teclado virtual -->
-    <div id="keyboard" class="keyboard">
-        <div class="keyboard-row">
-            <button class="key" data-letter="Q">Q</button><button class="key" data-letter="W">W</button><button
-                class="key" data-letter="E">E</button><button class="key" data-letter="R">R</button><button class="key"
-                data-letter="T">T</button><button class="key" data-letter="Y">Y</button><button class="key"
-                data-letter="U">U</button><button class="key" data-letter="I">I</button><button class="key"
-                data-letter="O">O</button><button class="key" data-letter="P">P</button>
-        </div>
-        <div class="keyboard-row">
-            <button class="key" data-letter="A">A</button><button class="key" data-letter="S">S</button><button
-                class="key" data-letter="D">D</button><button class="key" data-letter="F">F</button><button class="key"
-                data-letter="G">G</button><button class="key" data-letter="H">H</button><button class="key"
-                data-letter="J">J</button><button class="key" data-letter="K">K</button><button class="key"
-                data-letter="L">L</button>
-        </div>
-        <div class="keyboard-row">
-            <button class="key action" data-key="enter"> ↵</button>
-            <button class="key" data-letter="Z">Z</button><button class="key" data-letter="X">X</button><button
-                class="key" data-letter="C">C</button><button class="key" data-letter="V">V</button><button class="key"
-                data-letter="B">B</button><button class="key" data-letter="N">N</button><button class="key"
-                data-letter="M">M</button>
-            <button class="key action" data-key="backspace">⌫</button>
+            <div id="keyboard" class="keyboard">
+                <div class="keyboard-row">
+                    <button class="key" data-letter="Q">Q</button>
+                    <button class="key" data-letter="W">W</button>
+                    <button class="key" data-letter="E">E</button>
+                    <button class="key" data-letter="R">R</button>
+                    <button class="key" data-letter="T">T</button>
+                    <button class="key" data-letter="Y">Y</button>
+                    <button class="key" data-letter="U">U</button>
+                    <button class="key" data-letter="I">I</button>
+                    <button class="key" data-letter="O">O</button>
+                    <button class="key" data-letter="P">P</button>
+                </div>
+                <div class="keyboard-row">
+                    <button class="key" data-letter="A">A</button>
+                    <button class="key" data-letter="S">S</button>
+                    <button class="key" data-letter="D">D</button>
+                    <button class="key" data-letter="F">F</button>
+                    <button class="key" data-letter="G">G</button>
+                    <button class="key" data-letter="H">H</button>
+                    <button class="key" data-letter="J">J</button>
+                    <button class="key" data-letter="K">K</button>
+                    <button class="key" data-letter="L">L</button>
+                </div>
+                <div class="keyboard-row">
+                    <button class="key action" data-key="enter" aria-label="Enviar">↵</button>
+                    <button class="key" data-letter="Z">Z</button>
+                    <button class="key" data-letter="X">X</button>
+                    <button class="key" data-letter="C">C</button>
+                    <button class="key" data-letter="V">V</button>
+                    <button class="key" data-letter="B">B</button>
+                    <button class="key" data-letter="N">N</button>
+                    <button class="key" data-letter="M">M</button>
+                    <button class="key action" data-key="backspace" aria-label="Apagar">⌫</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Modal de fim de jogo -->
-    <div id="fimJogoModal" style="display: none;">
-        <div id="fimJogoContent">
-            <p id="mensagemFim"></p>
-            <button id="btnReiniciar">Jogar Novamente</button>
-            <button id="btnFechar">Fechar</button>
+    <div class="modal" id="fimJogoModal" hidden>
+        <div class="modal-conteudo" role="dialog" aria-modal="true" aria-labelledby="mensagemFim">
+            <button class="fechar" aria-label="Fechar">✕</button>
+            <h2 id="mensagemFim"></h2>
+            <p class="subtitulo">A palavra era</p>
+            <div class="linha linha-mini" id="palavraFim"></div>
+            <div class="painel-estatisticas" id="estatisticasFim"></div>
+            <div class="acoes">
+                <button id="btnCompartilhar" class="botao-secundario">Compartilhar</button>
+                <button id="btnReiniciar" class="botao-principal">Jogar de novo</button>
+            </div>
         </div>
     </div>
 
-    <!-- Modal Como Jogar-->
-    <div id="comojogarModal" style="display: none">
-        <div id="comojogarContent">
-            <p>Como jogar?<br><br>
-                Você tem 6 tentativas para conseguir descobrir a palavra secreta, podendo acertar a letra no lugar
-                certo, acertar a letra no lugar errado, ou errar a letra</p>
-            <br>
-            <p>Verde:</p><img src="img/Captura de tela 2025-09-16 210414.png">
-            <p>Letra certa na posição certa</p><br>
-            <p>Amarelo:</p><img src="img/Captura de tela 2025-09-16 210147.png">
-            <p>Letra certa na posição errada</p><br>
-            <p>Vermelho:</p><img src="img/Captura de tela 2025-09-16 210515.png">
-            <p>Letra errada (Não existe na palavra)</p><br>
-            <p>As palavras podem repetição de letras.
-                Exemplo: Amada
-            </p>
+    <!-- Modal Como Jogar -->
+    <div class="modal" id="comojogarModal" hidden>
+        <div class="modal-conteudo texto" role="dialog" aria-modal="true" aria-labelledby="tituloComoJogar">
+            <button class="fechar" aria-label="Fechar">✕</button>
+            <h2 id="tituloComoJogar">Como jogar</h2>
+            <p>Descubra a palavra secreta de 5 letras. São 6 tentativas no fácil, 5 no médio e 4 no difícil.</p>
+            <p>Depois de cada palpite, as letras mudam de cor:</p>
+
+            <div class="linha linha-mini">
+                <div class="celula verde">T</div><div class="celula">E</div><div class="celula">R</div><div class="celula">R</div><div class="celula">A</div>
+            </div>
+            <p><strong>Verde:</strong> a letra T está na palavra e no lugar certo.</p>
+
+            <div class="linha linha-mini">
+                <div class="celula">C</div><div class="celula amarelo">A</div><div class="celula">M</div><div class="celula">P</div><div class="celula">O</div>
+            </div>
+            <p><strong>Amarelo:</strong> a letra A está na palavra, mas em outro lugar.</p>
+
+            <div class="linha linha-mini">
+                <div class="celula">L</div><div class="celula">I</div><div class="celula vermelho">V</div><div class="celula">R</div><div class="celula">O</div>
+            </div>
+            <p><strong>Vermelho:</strong> a letra V não está na palavra.</p>
+
+            <p>As palavras podem ter letras repetidas, como em AMADA. Acentos e cedilha não contam: digite só as letras.</p>
         </div>
     </div>
-    <div id="sobreModal" style="display: none">
-        <div id="sobreContent">
-            <button id="fechar">X</button>SOBRE O JOGO<br><BR>
-            O Dialetra foi criado por mim, <a href="https://www.linkedin.com/in/henryco-meneghetti-1659b035b/">Henryco
-                Meneghetti.</a><br> <br>
-            Dialetra foi inspirado no <a href="https://term.ooo/">Termo</a> e no <a
-                href="https://www.nytimes.com/games/wordle/index.html">Wordle</a>.
+
+    <!-- Modal Sobre -->
+    <div class="modal" id="sobreModal" hidden>
+        <div class="modal-conteudo texto" role="dialog" aria-modal="true" aria-labelledby="tituloSobre">
+            <button class="fechar" aria-label="Fechar">✕</button>
+            <h2 id="tituloSobre">Sobre o jogo</h2>
+            <p>O Dialetra foi criado por <a href="https://www.linkedin.com/in/henryco-meneghetti-1659b035b/" target="_blank" rel="noopener">Henryco Meneghetti</a>.</p>
+            <p>Inspirado no <a href="https://term.ooo/" target="_blank" rel="noopener">Termo</a> e no <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank" rel="noopener">Wordle</a>.</p>
+            <p>Código no <a href="https://github.com/henryco-meneghetti/Dialetra" target="_blank" rel="noopener">GitHub</a>.</p>
         </div>
     </div>
 
     <!-- Modal Estatísticas -->
-    <div id="estatisticasModal" style="display:none">
-        <div id="estatisticasContent">
-            <h2>📊 Estatísticas</h2>
-            <p>Partidas jogadas: <span id="estat-partidas">0</span></p>
-            <p>Vitórias: <span id="estat-vitorias">0</span></p>
-            <p>Derrotas: <span id="estat-derrotas">0</span></p>
-            <p>Sequência atual: <span id="estat-streak">0</span></p>
-            <p>Melhor sequência: <span id="estat-best">0</span></p>
-            <button id="fecharEstatisticas">Fechar</button>
+    <div class="modal" id="estatisticasModal" hidden>
+        <div class="modal-conteudo" role="dialog" aria-modal="true" aria-labelledby="tituloEstatisticas">
+            <button class="fechar" aria-label="Fechar">✕</button>
+            <h2 id="tituloEstatisticas">Estatísticas</h2>
+            <div class="painel-estatisticas" id="estatisticasGerais"></div>
         </div>
     </div>
 
