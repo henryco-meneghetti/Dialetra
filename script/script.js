@@ -21,6 +21,17 @@ document.addEventListener("DOMContentLoaded", () => {
     let maxTentativas = tentativasPorModo[modoAtual];
     let resultados = []; // cores de cada palpite, usadas no compartilhamento
 
+    // Palavras aceitas como palpite: as secretas e a lista grande de dados/palpites.txt.
+    // Se a lista não carregar (por exemplo, abrindo o index.html direto do computador),
+    // o jogo continua aceitando as palavras secretas.
+    const palavrasAceitas = new Set(palavras);
+    if (location.protocol !== "file:") {
+        fetch("dados/palpites.txt")
+            .then(resposta => (resposta.ok ? resposta.text() : ""))
+            .then(texto => texto.split(/\s+/).forEach(p => { if (p) palavrasAceitas.add(p); }))
+            .catch(() => {});
+    }
+
     // Cria as linhas do tabuleiro
     const linhas = [];
     for (let l = 0; l < MAX_LINHAS; l++) {
@@ -291,7 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tremerLinha();
             return;
         }
-        if (!palavras.includes(palavraDigitada)) {
+        if (!palavrasAceitas.has(palavraDigitada)) {
             mostrarAviso("Essa palavra não está na lista");
             tremerLinha();
             return;
