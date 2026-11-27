@@ -36,7 +36,7 @@ A palavra pode ter letras repetidas, como em *amada*.
 ## Funcionalidades
 
 - Três níveis: fácil (6 tentativas), médio (5) e difícil (4)
-- Mais de 1.100 palavras em português
+- Mais de 1.100 palavras secretas, todas comuns, e mais de 18 mil palavras aceitas como palpite, com plurais e conjugações
 - Teclado na tela que mostra as letras já usadas, e o teclado do computador aceita letras com acento
 - Letras que viram uma por uma ao revelar o palpite
 - Estatísticas salvas no navegador: partidas, vitórias, sequências e acertos por tentativa
@@ -52,6 +52,21 @@ Não precisa instalar nada. Baixe o repositório e abra o `index.html` no navega
 ```bash
 git clone https://github.com/henryco-meneghetti/Dialetra.git
 ```
+
+Aberto direto do computador, o jogo aceita como palpite só as palavras secretas, porque o navegador bloqueia a leitura de `dados/palpites.txt`. Para testar com a lista completa, rode um servidor local na pasta do projeto, por exemplo com o Live Server do VS Code ou com:
+
+```bash
+python -m http.server
+```
+
+e abra `http://localhost:8000`.
+
+## Palavras
+
+- `script/palavras.js`: as palavras secretas, escolhidas para serem conhecidas
+- `dados/palpites.txt`: todas as palavras de 5 letras aceitas como palpite, uma por linha
+
+A lista de palpites vem do dicionário do corretor ortográfico do LibreOffice. Para gerar de novo, use `ferramentas/gerar_palpites.py`. As fontes e licenças estão em [`dados/CREDITOS.md`](dados/CREDITOS.md).
 
 ## Tecnologias
 
